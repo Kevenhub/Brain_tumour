@@ -1,0 +1,10 @@
+django
+tensorflow
+keras
+opencv-python
+numpy
+pandas
+matplotlib
+scikit-learn
+pillow
+django-crispy-forms

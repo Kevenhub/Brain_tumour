@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload MRI</title>
+</head>
+<body>
+    <h1>Upload MRI Image</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="mri_image" required>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

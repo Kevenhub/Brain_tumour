@@ -1,0 +1,13 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block content %}
+<h2>ML Model Control Panel</h2>
+<div style="margin:20px 0;">
+    <a href="load-data/" class="button" style="margin-right:10px; background:#007bff; color:white; padding:10px 15px; border-radius:5px;">📂 Load Data</a>
+    <a href="build-model/" class="button" style="margin-right:10px; background:#28a745; color:white; padding:10px 15px; border-radius:5px;">🏗 Build Model</a>
+    <a href="train-model/" class="button" style="background:#ffc107; color:black; padding:10px 15px; border-radius:5px;">🤖 Train Model</a>
+</div>
+
+{{ block.super }}
+{% endblock %}

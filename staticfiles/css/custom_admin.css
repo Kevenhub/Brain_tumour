@@ -1,0 +1,47 @@
+/* ===== Django Admin Custom Overrides ===== */
+
+/* Change the whole admin background */
+body {
+    background-color: #f5f7fa !important;
+}
+
+/* Header bar */
+#header {
+    background: linear-gradient(90deg, #1e3c72, #2a5298) !important;
+    color: #fff !important;
+    height: 60px;
+}
+
+/* Header title */
+#header h1 {
+    font-size: 22px !important;
+    font-weight: bold !important;
+}
+
+/* Module headings (e.g. "Authentication and Authorization") */
+.module caption {
+    background-color: #2a5298 !important;
+    color: #fff !important;
+    font-weight: bold;
+    padding: 6px 10px;
+}
+
+/* Buttons */
+.button, input[type=submit], .submit-row input {
+    background-color: #1e90ff !important;
+    color: white !important;
+    border-radius: 5px;
+    padding: 6px 14px;
+    font-weight: bold;
+}
+.button:hover, input[type=submit]:hover, .submit-row input:hover {
+    background-color: #0056b3 !important;
+    cursor: pointer;
+}
+
+/* Table header */
+#content-main table th {
+    background: #2a5298 !important;
+    color: white !important;
+    font-weight: bold;
+}
