@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-center mt-5">
+    <h1>Welcome to Brain Tumor Detection Portal</h1>
+    <p>Please login or register to continue.</p>
+    <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    <a href="{% url 'register' %}" class="btn btn-success">Register</a>
+</div>
+{% endblock %}

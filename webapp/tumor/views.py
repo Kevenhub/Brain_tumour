@@ -1,25 +1,29 @@
-from django.shortcuts import render
-from .forms import ImageUploadForm
-from mlmodels.prediction import predict_tumor   # we'll create this
 import os
+from django.shortcuts import render
 from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from backend.predict import predict_image   # ✅ import your function
 
 def upload_image(request):
-    result = None
-    if request.method == "POST":
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            image = form.cleaned_data["image"]
+    context = {}
+    if request.method == "POST" and request.FILES.get("image"):
+        uploaded_file = request.FILES["image"]
 
-            # Save uploaded file to MEDIA folder
-            file_path = os.path.join(settings.MEDIA_ROOT, image.name)
-            with open(file_path, "wb+") as f:
-                for chunk in image.chunks():
-                    f.write(chunk)
+        # Save uploaded image to MEDIA folder
+        fs = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, "uploads"))
+        filename = fs.save(uploaded_file.name, uploaded_file)
+        file_url = fs.url("uploads/" + filename)
 
-            # Call your ML model
-            result = predict_tumor(file_path)  
-    else:
-        form = ImageUploadForm()
+        # Full path for backend prediction
+        image_path = os.path.join(settings.MEDIA_ROOT, "uploads", filename)
 
-    return render(request, "tumor/upload.html", {"form": form, "result": result})
+        # Call your ML prediction
+        label, confidence, _ = predict_image(image_path)
+
+        context = {
+            "file_url": file_url,
+            "label": label,
+            "confidence": f"{confidence*100:.2f}%",
+        }
+
+    return render(request, "tumor/upload.html", context)

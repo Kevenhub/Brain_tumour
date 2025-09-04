@@ -8,8 +8,9 @@
         Welcome to our Brain Tumor Detection system. <br>
         Upload your MRI scans and get instant analysis using our AI-powered model.
     </p>
+
     {% if user.is_authenticated %}
-        <a href="#" class="btn btn-primary btn-lg mt-3">Upload MRI Image</a>
+        <a href="{% url 'upload_image' %}" class="btn btn-primary btn-lg mt-3">Upload MRI Image</a>
     {% else %}
         <a href="{% url 'login' %}" class="btn btn-success btn-lg mt-3 me-2">Login</a>
         <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg mt-3">Register</a>

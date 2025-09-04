@@ -2,16 +2,28 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm   # ✅ import your custom form
+from django.contrib.auth.views import LogoutView
 
 
-# Home Page (after login)
+def landing(request):
+    # This is shown to users who are NOT logged in
+    if request.user.is_authenticated:
+        return redirect("home")   # go to home if already logged in
+    return render(request, "accounts/landing.html")
+
+# Home Page (only for logged-in users)
+@login_required(login_url="landing")
 def home(request):
     return render(request, "accounts/home.html")
 
 
 # Register View
 def register(request):
+    if request.user.is_authenticated:
+        return redirect("home")   # 🚀 Prevent logged-in users from seeing register again
+
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -28,6 +40,9 @@ def register(request):
 
 # Login View
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect("home")   # 🚀 Prevent logged-in users from seeing login again
+
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -47,8 +62,6 @@ def user_login(request):
     return render(request, "accounts/login.html", {"form": form})
 
 
-# Logout View
-def user_logout(request):
-    logout(request)
-    messages.info(request, "You have successfully logged out.")
-    return redirect("login")
+class CustomLogoutView(LogoutView):
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
