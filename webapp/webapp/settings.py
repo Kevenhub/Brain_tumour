@@ -83,3 +83,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "webapp" / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = "upload"   # after login → go to upload page
+LOGOUT_REDIRECT_URL = "home"
